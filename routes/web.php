@@ -27,4 +27,12 @@ Route::get('/devices/{device}', [DeviceController::class, 'show'])->name('device
 Route::get('/devices/{device}/edit', [DeviceController::class, 'edit'])->name('devices.edit');
 Route::put('/devices/{device}', [DeviceController::class, 'update'])->name('devices.update');
 Route::delete('/devices/{device}', [DeviceController::class, 'destroy'])->name('devices.destroy');
+Route::get('/relay/{action}', function ($action) {
+    $response = Http::get('http://192.168.0.110/control', [
+        'action' => $action,
+    ]);
+
+    return $response->body();
+});
+
 
