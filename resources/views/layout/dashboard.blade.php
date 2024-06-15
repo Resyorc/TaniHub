@@ -16,6 +16,7 @@
         body {
             display: flex;
             margin: 0;
+            text-decoration: none;
         }
 
         #sidebar {
@@ -98,10 +99,10 @@
                 <span class="sidebar-item text fs-3 p-0 ms-5">TaniHub</span>
             </div>
             <ul class="list-unstyled">
-                <li class="sidebar-item"><span class="icon"><i class="bi bi-house-door-fill"></i></span><span class="text">Dashboard</span></li>
-                <li class="sidebar-item"><span class="icon"><i class="bi bi-info-circle-fill"></i></span><span class="text">Device</span></li>
-                <li class="sidebar-item"><span class="icon"><i class="bi bi-gear-fill"></i></span><span class="text">Account</span></li>
-                <li class="sidebar-item"><span class="icon"><i class="bi bi-envelope-fill"></i></span><span class="text">Contact</span></li>
+                <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-house-door-fill"></i></span><span class="text">Dashboard</span></li></a>
+                <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-info-circle-fill"></i></span><span class="text">Device</span></li></a>
+                <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-gear-fill"></i></span><span class="text">Account</span></li></a>
+                <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-envelope-fill"></i></span><span class="text">Contact</span></li></a>
             </ul>
         </div>
         <div class="logout-btn">
