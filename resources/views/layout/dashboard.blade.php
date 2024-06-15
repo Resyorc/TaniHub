@@ -94,7 +94,7 @@
     <div id="sidebar" class="bg-dark text-white" :class="{ 'collapsed': sidebarCollapsed }">
         <div>
             <div class="sidebar-item">
-                <img src="image/logo.png" alt="Logo" class="logo toggle-btn" @click="sidebarCollapsed = !sidebarCollapsed">
+                <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo toggle-btn" @click="sidebarCollapsed = !sidebarCollapsed">
                 <span class="sidebar-item text fs-3 p-0 ms-5">TaniHub</span>
             </div>
             <ul class="list-unstyled">
