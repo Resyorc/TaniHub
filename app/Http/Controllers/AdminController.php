@@ -4,17 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class AdminController extends Controller
 {
-
-
+    /**
+     * Display the admin dashboard.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('dashboard');
-    }
-
-    public function relay()
-    {
-        return view('relay');
     }
 }
