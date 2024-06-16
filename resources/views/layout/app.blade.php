@@ -32,7 +32,7 @@
                         <a class="nav-link" href="#">Tanaman</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Toko</a>
+                        <a class="nav-link" href="{{ route('dashboard') }}">Toko</a>
                     </li>
                 </ul>
                 @if (Auth::check())
@@ -49,8 +49,8 @@
                 </div>
             @else
                 <div class="ms-auto d-flex justify-content-center">
-                    <a href="{{ route('login') }}" class="btn btn-success">Masuk</a>
-                    <a href="{{ route('register') }}" class="btn btn-outline-success ms-2">Daftar</a>
+                    <a href="{{ route('auth.login') }}" class="btn btn-success">Masuk</a>
+                    <a href="{{ route('auth.register-proses') }}" class="btn btn-outline-success ms-2">Daftar</a>
                 </div>
             @endif
             </div>
@@ -67,7 +67,9 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+
+
 </body>
 
 </html>
