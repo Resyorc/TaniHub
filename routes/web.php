@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RelayController;
 use App\Http\Controllers\DeviceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,13 +33,6 @@ Route::get('/devices/{device}', [DeviceController::class, 'show'])->name('device
 Route::get('/devices/{device}/edit', [DeviceController::class, 'edit'])->name('devices.edit');
 Route::put('/devices/{device}', [DeviceController::class, 'update'])->name('devices.update');
 Route::delete('/devices/{device}', [DeviceController::class, 'destroy'])->name('devices.destroy');
-Route::get('/relay/{action}', function ($action) {
-    $response = Http::get('http://192.168.0.110/control', [
-        'action' => $action,
-    ]);
-    return $response->body();
-});
-
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
