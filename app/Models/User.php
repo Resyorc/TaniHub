@@ -31,12 +31,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::created(function ($user) {
-            if (\Spatie\Permission\Models\Role::where('name', 'admin')->exists()) {
-                $user->assignRole('admin');
-            } else {
-                $role = \Spatie\Permission\Models\Role::create(['name' => 'admin']);
-                $user->assignRole($role);
-            }
+            $user->assignRole('user'); // peran defaultnya userrr
         });
     }
 }

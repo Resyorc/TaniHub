@@ -100,14 +100,29 @@
             </div>
             <ul class="list-unstyled">
                 <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-house-door-fill"></i></span><span class="text">Dashboard</span></li></a>
-                <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-info-circle-fill"></i></span><span class="text">Device</span></li></a>
+                @if(Auth::user()->hasRole('admin'))
+                    <a href="{{ route('device.index') }}" class="text-decoration-none">
+                        <li class="sidebar-item text-white">
+                            <span class="icon"><i class="bi bi-info-circle-fill"></i></span>
+                            <span class="text">Device</span>
+                        </li>
+                    </a>
+                @endif
                 <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-gear-fill"></i></span><span class="text">Account</span></li></a>
                 <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-envelope-fill"></i></span><span class="text">Contact</span></li></a>
+                <a href="{{ route('dashboard') }}" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-grid"></i></span><span class="text">Beranda</span></li></a>
             </ul>
+
         </div>
         <div class="logout-btn">
-            <span class="btn btn-danger text"><i class="bi bi-box-arrow-right me-2"></i>Logout</span>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <span class="btn btn-danger text" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="bi bi-box-arrow-right me-2"></i>Logout
+            </span>
         </div>
+
     </div>
 
     <div id="content" class="p-4" :class="{ 'collapsed': sidebarCollapsed }">
