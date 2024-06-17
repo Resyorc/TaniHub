@@ -29,12 +29,6 @@
                             href="#">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tanaman</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Toko</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     </li>
                 </ul>
