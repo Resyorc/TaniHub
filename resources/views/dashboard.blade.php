@@ -27,74 +27,71 @@
         let isSiramInProgress = false;
 
         function fetchDataAndDrawChart() {
-            fetch('http://tanihub.test/api/sensor-data')
-                .then(response => response.json())
-                .then(data => {
-                    const { labels, temperatureData, humidityData, soilMoistureData } = processDataForChart(data.data);
+    fetch('http://localhost:8000/api/sensor-data')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Tambahkan ini untuk debugging
+            const { labels, temperatureData, humidityData, soilMoistureData } = processDataForChart(data.data);
 
-                    // Destroy existing chart if it exists
-                    if (chart) {
-                        chart.destroy();
-                    }
+            // Destroy existing chart if it exists
+            if (chart) {
+                chart.destroy();
+            }
 
-                    // Create new chart with updated data
-                    const ctx = document.getElementById('sensorChart').getContext('2d');
-                    chart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [
-                                {
-                                    label: 'Temperature',
-                                    data: temperatureData,
-                                    borderColor: 'rgba(255, 99, 132, 1)',
-                                    // backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                    fill: true
-                                },
-                                {
-                                    label: 'Humidity',
-                                    data: humidityData,
-                                    borderColor: 'rgba(54, 162, 235, 1)',
-                                    // backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                    fill: true
-                                },
-                                {
-                                    label: 'Soil Moisture',
-                                    data: soilMoistureData,
-                                    borderColor: 'rgba(75, 192, 192, 1)',
-                                    // backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                    fill: true
-                                }
-                            ]
+            // Create new chart with updated data
+            const ctx = document.getElementById('sensorChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Temperature',
+                            data: temperatureData,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            fill: true
                         },
-                        options: {
-                            responsive: true, // Responsivitas dimatikan
-                            // width: 1200, // Lebar canvas
-                            // height: 800, // Tinggi canvas
-                            scales: {
-                                x: {
-                                    type: 'time',
-                                    time: {
-                                        unit: 'day'
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: 'Time'
-                                    }
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Value'
-                                    }
-                                }
+                        {
+                            label: 'Humidity',
+                            data: humidityData,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            fill: true
+                        },
+                        {
+                            label: 'Soil Moisture',
+                            data: soilMoistureData,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Value'
                             }
                         }
-                    });
-                })
-                .catch(error => console.error('Error updating chart:', error));
-        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error updating chart:', error));
+}
+
 
         function siramTanaman() {
             // Menggunakan Alpine.js untuk mengubah nilai isSiramInProgress

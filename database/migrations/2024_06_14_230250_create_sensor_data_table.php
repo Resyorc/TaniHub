@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSensorDataTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('sensor_data', function (Blueprint $table) {
@@ -23,11 +18,6 @@ class CreateSensorDataTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('sensor_data');
