@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SensorResource;
-use App\Models\Sensor;
 use App\Models\SensorData;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class SensorDataController extends Controller
@@ -14,39 +11,26 @@ class SensorDataController extends Controller
     public function index()
     {
         $sensorData = SensorData::all();
-        return SensorResource::collection($sensorData);
+        return response()->json($sensorData);
     }
 
-    public function processSensorData()
+    public function store(Request $request)
     {
-        $endTime = Carbon::now();
-        $startTime = Carbon::now()->subHour();
+        $validated = $request->validate([
+            'device_id' => 'required|integer',
+            'soil_moisture' => 'required|numeric',
+            'humidity' => 'required|numeric',
+            'temperature' => 'required|numeric',
+        ]);
 
-        // Mengambil data sensor dalam rentang waktu yang ditentukan
-        $sensorData = Sensor::whereBetween('updated_at', [$startTime, $endTime])->get();
+        // Save the validated data to the sensor_data table
+        SensorData::create([
+            'sensor_id' => $validated['device_id'],
+            'average_temperature' => $validated['temperature'],
+            'average_humidity' => $validated['humidity'],
+            'average_soil_moisture' => $validated['soil_moisture'],
+        ]);
 
-        // Mengelompokkan data berdasarkan sensor_id
-        $groupedData = $sensorData->groupBy('sensor_id');
-
-        foreach ($groupedData as $sensorId => $data) {
-            $avgTemperature = $data->avg('temperature');
-            $avgHumidity = $data->avg('humidity');
-            $avgSoilMoisture = $data->avg('soil_moisture');
-
-            // Validasi bahwa sensor_id tidak kosong
-            if ($sensorId !== null) {
-                SensorData::create([
-                    'sensor_id' => $sensorId,
-                    'timestamp' => $endTime->format('Y-m-d H:00:00'),
-                    'average_temperature' => $avgTemperature,
-                    'average_humidity' => $avgHumidity,
-                    'average_soil_moisture' => $avgSoilMoisture,
-                ]);
-            }// else {
-            //     \Log::warning("Sensor ID is null for the data group: " . json_encode($data));
-            // }
-        }
-
-        return response()->json(['message' => 'Sensor data processed and stored successfully.']);
+        return response()->json(['message' => 'Sensor data processed and stored successfully'], 201);
     }
 }

@@ -21,3 +21,6 @@ Route::post('/process-sensor-data', [SensorDataController::class, 'processSensor
 
 Route::get('/relay/status', [RelayController::class, 'getStatus']);
 Route::post('/relay/status/{status}', [RelayController::class, 'setStatus']);
+
+Route::post('sensor-data', [SensorDataController::class, 'store'])->name('sensor-data.store');
+Route::apiResource('sensors', SensorController::class);

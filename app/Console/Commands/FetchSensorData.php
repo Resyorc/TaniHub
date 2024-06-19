@@ -13,7 +13,7 @@ class FetchSensorData extends Command
 
     public function handle()
     {
-        $response = Http::get('http://tanihub.test/api/sensor');
+        $response = Http::get('http://localhost:8000/api/sensor');
 
         if ($response->successful()) {
             $sensorData = $response->json()['data'];

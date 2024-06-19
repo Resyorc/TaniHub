@@ -29,7 +29,7 @@ class ProcessSensorData extends Command
     public function handle()
     {
         // Endpoint to get sensor data
-        $getSensorDataEndpoint = url('http://tanihub.test/api/sensor');
+        $getSensorDataEndpoint = url('http://localhost:8000/api/sensor');
 
         // Make a request to the /api/sensor endpoint to get the data
         $response = Http::get($getSensorDataEndpoint);
@@ -42,41 +42,27 @@ class ProcessSensorData extends Command
             foreach ($sensorData as $data) {
                 // Check if all required fields are present and valid
                 if (
-                    isset($data['sensor_id']) && isset($data['temperature']) && isset($data['humidity']) && isset($data['soil_moisture']) &&
-                    is_numeric($data['sensor_id']) && is_numeric($data['temperature']) && is_numeric($data['humidity']) && is_numeric($data['soil_moisture'])
+                    isset($data['device_id']) && isset($data['temperature']) && isset($data['humidity']) && isset($data['soil_moisture']) &&
+                    is_numeric($data['device_id']) && is_numeric($data['temperature']) && is_numeric($data['humidity']) && is_numeric($data['soil_moisture'])
                 ) {
-
                     // Save data to the database
                     SensorData::create([
-                        'sensor_id' => $data['id'],
+                        'sensor_id' => $data['device_id'],
                         'average_temperature' => $data['temperature'],
                         'average_humidity' => $data['humidity'],
                         'average_soil_moisture' => $data['soil_moisture'],
                     ]);
-
                 } else {
                     // Log invalid data for debugging
-                    Log::error('Invalid sensor data received', $data);
-                    if (!isset($data['id'])) {
-                        Log::error('Missing id in sensor data', $data);
-                    } elseif (!isset($data['temperature'])) {
-                        Log::error('Missing temperature in sensor data', $data);
-                    } elseif (!isset($data['humidity'])) {
-                        Log::error('Missing humidity in sensor data', $data);
-                    } elseif (!isset($data['soil_moisture'])) {
-                        Log::error('Missing soil_moisture in sensor data', $data);
-                    } elseif (!is_numeric($data['id'])) {
-                        Log::error('Non-numeric id in sensor data', $data);
-                    } elseif (!is_numeric($data['temperature'])) {
-                        Log::error('Non-numeric temperature in sensor data', $data);
-                    } elseif (!is_numeric($data['humidity'])) {
-                        Log::error('Non-numeric humidity in sensor data', $data);
-                    } elseif (!is_numeric($data['soil_moisture'])) {
-                        Log::error('Non-numeric soil_moisture in sensor data', $data);
-                    } else {
-                        // Data is valid
-                    }
-
+                    Log::error('Invalid sensor data received', [
+                        'data' => $data,
+                        'missing_or_invalid_fields' => [
+                            'device_id' => isset($data['device_id']) && is_numeric($data['device_id']),
+                            'temperature' => isset($data['temperature']) && is_numeric($data['temperature']),
+                            'humidity' => isset($data['humidity']) && is_numeric($data['humidity']),
+                            'soil_moisture' => isset($data['soil_moisture']) && is_numeric($data['soil_moisture']),
+                        ]
+                    ]);
                 }
             }
         } else {

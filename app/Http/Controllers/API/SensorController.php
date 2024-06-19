@@ -4,9 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Sensor;
+use App\Models\SensorData;
 use Illuminate\Http\Request;
 use App\Http\Resources\SensorResource;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+use App\Http\Resources\SensorDataResource;
+use Illuminate\Support\Facades\Log;
+
 
 class SensorController extends Controller
 {
@@ -18,10 +23,11 @@ class SensorController extends Controller
     public function index()
     {
         // Mengambil semua data Sensor
-        $Sensor = Sensor::all();
+        $sensors = Sensor::all();
 
         // Mengembalikan data dalam bentuk resource collection
-        return SensorResource::collection($Sensor);
+        return response()->json(SensorResource::collection($sensors));
+
     }
 
     /**
@@ -32,22 +38,27 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate input
-        $validator = Validator::make($request->all(), [
-            'soil_moisture' => 'required|numeric',
-            'humidity' => 'required|numeric',
-            'temperature' => 'required|numeric',
+        $validated = $request->validate([
             'device_id' => 'required|integer',
+            'soil_moisture' => 'required|numeric|min:0|max:100',
+            'humidity' => 'required|numeric|min:0|max:100',
+            'temperature' => 'required|numeric',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+        Log::info('Data yang divalidasi: ', $validated);
 
-        // Create new sensor data
-        $Sensor = Sensor::create($request->all());
+        // Simpan data ke tabel sensors
+        $sensor = Sensor::create($validated);
 
-        return response()->json(new SensorResource($Sensor), 201);
+        // Simpan data ke tabel sensor_data
+        SensorData::create([
+            'sensor_id' => $sensor->id,
+            'average_temperature' => $validated['temperature'],
+            'average_humidity' => $validated['humidity'],
+            'average_soil_moisture' => $validated['soil_moisture'],
+        ]);
+
+        return response()->json(['message' => 'Sensor data stored and processed successfully'], 201);
     }
 
     /**
@@ -58,15 +69,26 @@ class SensorController extends Controller
      */
     public function show($id)
     {
-        $Sensor = Sensor::find($id);
+        $sensor = Sensor::find($id);
 
-        if (is_null($Sensor)) {
+        if (is_null($sensor)) {
             return response()->json(['message' => 'Data not found'], 404);
         }
 
-        return new SensorResource($Sensor);
+        return response()->json(SensorResource::collection($sensor));
     }
 
+
+    public function showSensorData($id)
+    {
+        $sensorData = SensorData::find($id);
+
+        if (is_null($sensorData)) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+
+        return response()->json(SensorDataResource::collection($sensorData));
+    }
     /**
      * Update the specified resource in storage.
      *

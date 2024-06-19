@@ -8,14 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Sensor extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'device_id',
-        'soil_moisture',
-        'humidity',
-        'temperature',
-    ];
-    public function device()
+
+    protected $fillable = ['device_id', 'soil_moisture', 'humidity', 'temperature'];
+
+    public function sensorData()
     {
-        return $this->belongsTo(Device::class);
+        return $this->hasMany(SensorData::class);
     }
 }
