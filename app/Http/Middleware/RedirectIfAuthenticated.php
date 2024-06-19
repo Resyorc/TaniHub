@@ -15,10 +15,10 @@ class RedirectIfAuthenticated
             if ($user->hasRole('admin')) {
                 // ke dashboard
                 return redirect()->route('admin.dashboard');
-            } else {
-                // ke home
-                return redirect()->route('dashboard');
-            }
+            } //else {
+            //     // ke home
+            //     return redirect()->route('dashboard');
+            // }
         }
 
         return $next($request);

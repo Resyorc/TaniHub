@@ -10,10 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('relays', function (Blueprint $table) {
+        Schema::create('sensors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('device_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['on', 'off'])->default('off');
+            $table->string('soil_moisture')->default(0);
+            $table->string('humidity')->default(0);
+            $table->string('temperature')->default(0);
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('relays');
+        Schema::dropIfExists('sensors');
     }
 };

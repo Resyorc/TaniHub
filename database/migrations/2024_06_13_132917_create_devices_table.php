@@ -10,10 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('relays', function (Blueprint $table) {
+        Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('device_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['on', 'off'])->default('off');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -23,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('relays');
+        Schema::dropIfExists('devices');
     }
 };

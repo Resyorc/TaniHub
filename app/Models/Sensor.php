@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Relay extends Model
+class Sensor extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'device_id',
-        'status'
+        'soil_moisture',
+        'humidity',
+        'temperature',
     ];
-
     public function device()
     {
         return $this->belongsTo(Device::class);

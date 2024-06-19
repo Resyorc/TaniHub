@@ -1,4 +1,4 @@
-@extends('layout.dashboard')
+@extends('layout.sidebar')
 
 @section('content')
 <div class="container">
@@ -23,21 +23,22 @@
                 </thead>
                 <tbody>
                     @foreach ($devices as $device)
-                    <tr>
-                        <td>{{ $device->id }}</td>
-                        <td>{{ $device->device_name }}</td>
-                        <td>{{ $device->temperature_sensor }}°C</td>
-                        <td>{{ $device->humidity_sensor }}%</td>
-                        <td>{{ $device->soil_moisture_sensor }}%</td>
-                        <td>
-                            <a href="{{ route('devices.edit', $device->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                            <form action="{{ route('devices.destroy', $device->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ $device->id }}</td>
+                            <td>{{ $device->name }}</td>
+                            <td>{{ $device->temperature_sensor }}°C</td>
+                            <td>{{ $device->humidity_sensor }}%</td>
+                            <td>{{ $device->soil_moisture_sensor }}%</td>
+                            <td>
+                                <a href="{{ route('devices.edit', $device->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <form action="{{ route('devices.destroy', $device->id) }}" method="POST"
+                                    style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

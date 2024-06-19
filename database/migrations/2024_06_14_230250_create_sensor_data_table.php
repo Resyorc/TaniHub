@@ -12,9 +12,11 @@ return new class extends Migration {
     {
         Schema::create('sensor_data', function (Blueprint $table) {
             $table->id();
-            $table->string('soil_moisture');
-            $table->string('humidity');
-            $table->string('temperature');
+            $table->string('sensor_id');
+            $table->timestamp('timestamp_hourly');
+            $table->float('average_temperature');
+            $table->float('average_humidity');
+            $table->float('average_soil_moisture');
             $table->timestamps();
         });
     }

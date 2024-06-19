@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Device;
+use App\Models\Relay;
+use App\Models\Sensor;
 
 class DeviceController extends Controller
 {
@@ -16,50 +18,51 @@ class DeviceController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'device_name' => 'required|string|max:255',
-            'temperature_sensor' => 'required|numeric',
-            'humidity_sensor' => 'required|numeric',
-            'soil_moisture_sensor' => 'required|numeric',
+        $device = Device::create(['name' => $request->name]);
+
+        // Buat sensor dengan nilai default 0
+        Sensor::create([
+            'device_id' => $device->id,
+            'soil_moisture' => 0,
+            'humidity' => 0,
+            'temperature' => 0
         ]);
 
-        $device = Device::create($validatedData);
-        // return response()->json($device, 201);
-        return redirect()->route('devices.index')->with('success', 'Device created successfully.');
+        // Buat relay dengan status default 'off'
+        Relay::create(['device_id' => $device->id, 'status' => 'off']);
+
+        return redirect()->route('devices.index')->with('success', 'Device created successfully!');
     }
 
     public function create()
-{
-    return view('crud.create');
-}
+    {
+        return view('crud.create');
+    }
 
 
-public function update(Request $request, Device $device)
-{
-    $validatedData = $request->validate([
-        'device_name' => 'required|string|max:255',
-        'temperature_sensor' => 'required|numeric',
-        'humidity_sensor' => 'required|numeric',
-        'soil_moisture_sensor' => 'required|numeric',
-    ]);
+    public function update(Request $request, Device $device)
+    {
+        $validatedData = $request->validate([
+            'device_name' => 'required|string|max:255',
+        ]);
 
-    $device->update($validatedData);
+        $device->update($validatedData);
 
-    return redirect()->route('devices.index')->with('success', 'Device updated successfully.');
-}
+        return redirect()->route('devices.index')->with('success', 'Device updated successfully.');
+    }
 
-public function edit(Device $device)
-{
-    return view('crud.edit', compact('device'));
-}
-public function destroy(Device $device)
-{
-    $device->delete();
+    public function edit(Device $device)
+    {
+        return view('crud.edit', compact('device'));
+    }
+    public function destroy(Device $device)
+    {
+        $device->delete();
 
-    return redirect()->route('devices.index')->with('success', 'Device deleted successfully.');
-}
-public function show(Device $device)
-{
-    return view('device', compact('device'));
-}
+        return redirect()->route('devices.index')->with('success', 'Device deleted successfully.');
+    }
+    public function show(Device $device)
+    {
+        return view('device', compact('device'));
+    }
 }

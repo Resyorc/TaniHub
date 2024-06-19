@@ -9,11 +9,15 @@ class Device extends Model
 {
     use HasFactory;
 
-    protected $table = 'device';
-    protected $fillable = [
-        'device_name',
-        'temperature_sensor',
-        'humidity_sensor',
-        'soil_moisture_sensor',
-    ];
+    protected $fillable = ['name'];
+
+    public function sensors()
+    {
+        return $this->hasMany(Sensor::class);
+    }
+
+    public function relays()
+    {
+        return $this->hasMany(Relay::class);
+    }
 }

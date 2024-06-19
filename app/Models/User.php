@@ -30,8 +30,8 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::created(function ($user) {
-            $user->assignRole('user'); // peran defaultnya userrr
-        });
+        // static::created(function ($user) {
+        //     $user->assignRole('user'); // peran defaultnya userrr
+        // });
     }
 }

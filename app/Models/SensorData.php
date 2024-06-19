@@ -8,10 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class SensorData extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'soil_moisture',
-        'humidity',
-        'temperature',
+        'sensor_id',
+        'timestamp_hourly',
+        'average_temperature',
+        'average_humidity',
+        'average_soil_moisture'
     ];
+
+    // Jika diperlukan, Anda bisa menambahkan hubungan (relationship) di sini
+    public function sensor()
+    {
+        return $this->belongsTo(Sensor::class, 'sensor_id', 'id');
+    }
 }

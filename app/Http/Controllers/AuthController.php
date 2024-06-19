@@ -20,13 +20,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            $user = Auth::user();
-
-            if ($user->hasRole('admin')) {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('dashboard');
-            }
+            return redirect()->route('admin.dashboard');
         }
 
         return back()->withErrors([
@@ -54,6 +48,17 @@ class AuthController extends Controller
         ]);
 
         $user->assignRole('user');
+
+        return redirect()->route('auth.login');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
 
         return redirect()->route('auth.login');
     }
