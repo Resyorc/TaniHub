@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('sensors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('device_id')->constrained()->onDelete('cascade');
-            $table->string('soil_moisture')->default(0);
-            $table->string('humidity')->default(0);
-            $table->string('temperature')->default(0);
+            $table->float('soil_moisture')->default(0);
+            $table->float('humidity')->default(0);
+            $table->float('temperature')->default(0);
             $table->timestamps();
         });
     }

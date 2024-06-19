@@ -27,7 +27,7 @@
         let isSiramInProgress = false;
 
         function fetchDataAndDrawChart() {
-            fetch('http://tanihub.test/api/sensor')
+            fetch('http://tanihub.test/api/sensor-data')
                 .then(response => response.json())
                 .then(data => {
                     const { labels, temperatureData, humidityData, soilMoistureData } = processDataForChart(data.data);

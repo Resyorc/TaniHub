@@ -16,6 +16,7 @@ class SensorResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'device_id' => $this->device_id,
             'soil_moisture' => $this->soil_moisture,
             'humidity' => $this->humidity,
             'temperature' => $this->temperature,
