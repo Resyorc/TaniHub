@@ -20,8 +20,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            return redirect()->intended('/');
+            return redirect()->route('admin.dashboard');
         }
 
         return back()->withErrors([
@@ -42,11 +41,24 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->assignRole('user');
+
+        return redirect()->route('auth.login');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
 
         return redirect()->route('auth.login');
     }

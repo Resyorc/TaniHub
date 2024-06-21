@@ -10,6 +10,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Alpine JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script>
+
 </head>
 
 <body>
@@ -30,18 +31,25 @@
                             href="#">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tanaman</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Toko</a>
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     </li>
                 </ul>
                 @if (Auth::check())
-
+                    <div class="ms-auto d-flex align-items-center">
+                        <div class="me-3">
+                            <button class="btn btn-outline-secondary" type="button">
+                                {{ Auth::user()->name }}
+                            </button>
+                        </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </div>
                 @else
                     <div class="ms-auto d-flex justify-content-center">
                         <a href="{{ route('auth.login') }}" class="btn btn-success">Masuk</a>
-                        <a href="" class="btn btn-outline-success ms-2">Daftar</a>
+                        <a href="{{ route('auth.register-proses') }}" class="btn btn-outline-success ms-2">Daftar</a>
                     </div>
                 @endif
             </div>
@@ -57,8 +65,8 @@
     </footer>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
 </body>
 
 </html>

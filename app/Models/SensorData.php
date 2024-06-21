@@ -9,9 +9,10 @@ class SensorData extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'soil_moisture',
-        'humidity',
-        'temperature',
-    ];
+    protected $fillable = ['sensor_id', 'average_temperature', 'average_humidity', 'average_soil_moisture'];
+
+    public function sensor()
+    {
+        return $this->belongsTo(Sensor::class);
+    }
 }

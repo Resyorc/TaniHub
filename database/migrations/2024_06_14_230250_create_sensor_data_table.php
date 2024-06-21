@@ -4,26 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+class CreateSensorDataTable extends Migration
+{
+    public function up()
     {
         Schema::create('sensor_data', function (Blueprint $table) {
             $table->id();
-            $table->string('soil_moisture');
-            $table->string('humidity');
-            $table->string('temperature');
+            $table->foreignId('sensor_id')->constrained()->onDelete('cascade');
+            $table->float('average_temperature');
+            $table->float('average_humidity');
+            $table->float('average_soil_moisture');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('sensor_data');
     }
-};
+}

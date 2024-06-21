@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SensorResource extends JsonResource
+class SensorDataResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +16,11 @@ class SensorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'device_id' => $this->device_id,
-            'soil_moisture' => $this->soil_moisture,
-            'humidity' => $this->humidity,
-            'temperature' => $this->temperature,
+            'sensor_id' => $this->sensor_id,
+            'timestamp' => $this->timestamp,
+            'average_temperature' => $this->average_temperature,
+            'average_humidity' => $this->average_humidity,
+            'average_soil_moisture' => $this->average_soil_moisture,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
