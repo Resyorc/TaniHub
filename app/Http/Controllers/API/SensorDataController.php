@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SensorDataResource;
 use App\Models\SensorData;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,8 @@ class SensorDataController extends Controller
     public function index()
     {
         $sensorData = SensorData::all();
-        return response()->json($sensorData);
+        return response()->json(SensorDataResource::collection($sensorData));
+
     }
 
     public function store(Request $request)

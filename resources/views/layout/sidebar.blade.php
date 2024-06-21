@@ -99,7 +99,8 @@
                 <span class="sidebar-item text fs-3 p-0 ms-5">TaniHub</span>
             </div>
             <ul class="list-unstyled">
-                <a href="" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-house-door-fill"></i></span><span class="text">Dashboard</span></li></a>
+                <a href="{{ route('admin.dashboard') }}" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-house-door-fill"></i></span><span class="text">Dashboard</span></li></a>
+                <a href="{{ route('sensor') }}" class="text-decoration-none"><li class="sidebar-item text-white"><span class="icon"><i class="bi bi-grid-fill"></i></span><span class="text">Monitor</span></li></a>
                 @if(Auth::user()->hasRole('admin'))
                     <a href="{{ route('devices.index') }}" class="text-decoration-none">
                         <li class="sidebar-item text-white">
@@ -132,6 +133,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/alpine.min.js"></script>
 </body>
 
 </html>

@@ -12,4 +12,5 @@ Artisan::command('inspire', function () {
 // $schedule->command('sensor:fetch')->hourly();
 
 $schedule = app(Schedule::class);
-$schedule->command('sensor:process')->everySecond()->withoutOverlapping()->appendOutputTo(storage_path('logs/scheduler.log'));;
+$schedule->command('sensor:process')->everyThreeMinutes()->withoutOverlapping()->appendOutputTo(storage_path('logs/scheduler.log'));
+;

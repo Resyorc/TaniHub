@@ -29,7 +29,7 @@ class ProcessSensorData extends Command
     public function handle()
     {
         // Endpoint to get sensor data
-        $getSensorDataEndpoint = url('http://localhost:8000/api/sensor');
+        $getSensorDataEndpoint = url('http://tanihub.test/api/sensor');
 
         // Make a request to the /api/sensor endpoint to get the data
         $response = Http::get($getSensorDataEndpoint);

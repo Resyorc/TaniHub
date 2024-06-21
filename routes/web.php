@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SensorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\DashboardController;
@@ -42,4 +43,5 @@ Route::group(['middleware' => ['auth']], function () {
     // Rute admin lainnya
 });
 
-
+// Rute untuk sensor
+Route::get('/sensor', [SensorController::class, 'index'])->name('sensor');
